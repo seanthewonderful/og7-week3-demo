@@ -20,20 +20,20 @@
 
 **File structure should be:**
 
-- Week3-assessment
-- |- client
-- | |- index.html
-- | |- main.js
-- | |- styles.css
-- |
-- |- node_modules
-- |- server
-- | |- controller.js
-- | |- db.json
-- | |- server.js
-- |
-- |-package-lock.json
-- |-package.json
+Week3-assessment
+|- client
+| |- index.html
+| |- main.js
+| |- styles.css
+|
+|- node_modules
+|- server
+| |- controller.js
+| |- db.json
+| |- server.js
+|
+|-package-lock.json
+|-package.json
 
 2. For your db.json file:
 
