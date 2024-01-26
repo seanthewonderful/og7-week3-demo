@@ -1,0 +1,127 @@
+1. 
+  - mkdir week3-code-along
+  - mkdir client server
+  - touch client/index.html client/main.js client/styles.css
+  - touch server/server.js db.json
+  - npm init -y
+  - npm i axios express cors express-session
+  - "type": "module", "main": "server/server.js"
+  - script- "dev": "nodemon app.js -w server -w client -e html,js,css"
+
+2. Copy + Paste db.json, styles.css
+
+3. Write index.html
+
+4. Boilerplate server.js
+
+5. npm run dev - should launch index.html
+  - <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  - <script src="main.js" />
+  - console.log("Hello from main.js")
+
+6. Make an endpoint
+- server.js:
+
+  app.get("/hello", (req, res) => {
+    res.send({ message: "Hello there" })
+  })
+
+7. Make a request
+- main.js: 
+
+axios.get("/hello")
+ .then((res) => {
+  console.log(res.data)
+  
+  document.querySelector("#drinkDisplay").innerText = res.data.message
+ })
+
+8. touch server/controller.js
+  - controller.js: 
+   const handlerFunctions = {
+    sayHello: (req, res) => {
+      res.send({ message: "Hello there" })
+    }
+   }
+
+  - server.js
+    - import handlerFunctions from "./controller.js"
+    - const { sayHello } = handlerFunctions
+    - app.get("/hello", sayHello)
+
+9. NOW WE HAVE FRONT/BACK CONNECTED. MOVE TO main.js:
+
+  - We'll need a couple elements querySelected to re-use
+    - #drinkDisplay
+    - <form>
+
+  - We want to create a new Drink Card
+    - createDrinkCard(drinkObject)
+      - drinkObject will look like each drink in db.json
+    - createElement 
+    - give className "drink-card"
+    - create innerHTML
+      - dont add onclicks yet
+    - append new drink card element to drinkDisplay
+
+  - We need a function to loop through all drinks from db input
+    - displayAllDrinks(drinks)
+      - drinks will come from db.json. What datatype will it be? Array
+    - for-loop, each iteration console.log to verify we are getting the right output
+      - each iteration, invoke createDrinkCard(drinks[i])
+    - invoke with db.json array passed in to confirm it works
+  
+  - Now how can the front-end communicate with the back-end to get all the drinks?
+    - main.js -> getAllDrinks() 
+      - axios request - get('/drinks')
+      - .then(console.log(res))
+    
+    - But we need an endpoint to handle this!
+      - controller.js
+        - import drinks from './db.json' assert {type: 'json'}
+        - allDrinks: (req, res) => ...
+      - server.js
+        - import allDrinks
+        - app.get("/drinks", allDrinks)
+
+    - back to main.js
+      - getAllDrinks() add:
+        - displayAllDrinks(response.data)
+        - .catch(error)
+    
+10. ALLOW THE USER TO ADD A DRINK = POST
+  
+  - main.js - drinkForm will need an event listener and a function to execute
+    - handleSubmit - remember functions that are used as eventListeners can accept the optional 'event' param - 
+    - get to axios.post() - need an endpoint too
+    - controller.js - create global variable for id = 4
+    - addDrink
+      - get name and imgUrl from req.body
+      - create new drinkObj identical to others
+      - drinks.push(drinkObj)
+      - globalId++
+      - do we send back just the drink? Or a full list of all drinks again?
+
+11. ALLOW THE USER TO DELETE A DRINK
+
+  - main.js - need function and eventListener
+    - deleteDrink
+    - instead of addEventListener, update the drinkCard innerHTML to add onclick to the delete button
+    - how will we know which drink is being deleted? need (drinkId)
+    - what return will be expected now? 
+
+  - server.js - how will we receive this? 
+
+  - controller.js - how will we process this?
+
+12. ALLOW THE USER TO UPDATE A DRINK'S VOTES
+
+  - main.js need to add onclick event to the +/- buttons generated in createDrinkCard
+    - need to create function updateDrink(drinkId, type)
+    - function sends axios.put request with id as param and voteType in the body
+  - server.js - how will we receive this request?
+
+  - controller.js - how to process a put request? 
+    - same way
+    - grab id from req.params
+    - grab voteType from req.body
