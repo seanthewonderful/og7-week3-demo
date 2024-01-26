@@ -15,7 +15,7 @@
 - package.json -
   - change "main" --> "main": "server/server.js",
   - under this line, add --> "type": "module",
-  - add a script --> "dev": "nodemon app.js -w server -w client -e html,js,css",
+  - add a script --> "dev": "nodemon server/server.js -w server -w client -e html,js,css",
   - Don't forget the trailing commas on those lines!
 
 **File structure should be:**

@@ -6,7 +6,7 @@
   - npm init -y
   - npm i axios express cors express-session
   - "type": "module", "main": "server/server.js"
-  - script- "dev": "nodemon app.js -w server -w client -e html,js,css"
+  - script- "dev": "nodemon server/server.js -w server -w client -e html,js,css"
 
 2. Copy + Paste db.json, styles.css
 
