@@ -20,6 +20,7 @@
 
 **File structure should be:**
 
+```
 Week3-assessment
 |- client
 | |- index.html
@@ -34,6 +35,7 @@ Week3-assessment
 |
 |-package-lock.json
 |-package.json
+```
 
 2. For your db.json file:
 
